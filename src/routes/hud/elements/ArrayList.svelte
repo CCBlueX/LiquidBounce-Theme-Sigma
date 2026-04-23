@@ -1,12 +1,12 @@
 <script lang="ts">
-    import {onMount, tick} from "svelte";
-    import type {Module} from "../../../integration/types";
-    import {getModules} from "../../../integration/rest";
-    import {listen} from "../../../integration/ws";
-    import {getTextWidth} from "../../../integration/text_measurement";
-    import {flip} from "svelte/animate";
-    import {fly} from "svelte/transition";
-    import {convertToSpacedString, spaceSeperatedNames} from "../../../theme/theme_config";
+    import { onMount, tick } from "svelte";
+    import type { Module } from "../../../integration/types";
+    import { getModules } from "../../../integration/rest";
+    import { listen } from "../../../integration/ws";
+    import { getTextWidth } from "../../../integration/text_measurement";
+    import { flip } from "svelte/animate";
+    import { fly } from "svelte/transition";
+    import { convertToSpacedString, spaceSeperatedNames } from "../../../theme/theme_config";
 
     export let settings: { [name: string]: any };
 
@@ -19,10 +19,14 @@
         const visibleModules = modules.filter(m => m.enabled && !m.hidden);
 
         const modulesWithWidths = visibleModules.map(module => {
-            const formattedName = $spaceSeperatedNames ? convertToSpacedString(module.name) : module.name;
-            const fullName = module.tag == null || !cSettings.showTags
-                ? formattedName
-                : formattedName + " " + module.tag;
+            const formattedName = $spaceSeperatedNames
+                ? convertToSpacedString(module.name)
+                : module.name;
+
+            const fullName =
+                module.tag == null || !cSettings.showTags
+                    ? formattedName
+                    : formattedName + " " + module.tag;
 
             return {
                 ...module,
@@ -30,7 +34,11 @@
             };
         });
 
-        modulesWithWidths.sort((a, b) => cSettings.order === "Ascending" ? a.width - b.width : b.width - a.width);
+        modulesWithWidths.sort((a, b) =>
+            cSettings.order === "Ascending"
+                ? a.width - b.width
+                : b.width - a.width
+        );
 
         enabledModules = modulesWithWidths;
         await tick();
@@ -42,6 +50,7 @@
 
     onMount(async () => {
         await updateEnabledModules();
+        startHueAnimation();
     });
 
     listen("moduleToggle", async () => {
@@ -51,17 +60,49 @@
     listen("refreshArrayList", async () => {
         await updateEnabledModules();
     });
+    let t = 0;
+
+    function startHueAnimation() {
+        function loop() {
+            let hue = Math.sin(t);
+            hue = (hue + 1) / 2;
+            if (hue < 0.5) hue = 0.5 - hue;
+
+            const cssHue = hue * 360;
+
+            const color = `hsl(${cssHue}, 70%, 55%)`;
+            document.documentElement.style.setProperty(
+                "--arraylist-border-color",
+                color
+            );
+
+            document.documentElement.style.setProperty(
+                "--arraylist-text-color",
+                color
+            );
+
+            t += 0.03;
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    }
 </script>
 
 <div class="arraylist">
-    {#each enabledModules as {name, tag} (name)}
+    {#each enabledModules as { name, tag } (name)}
         <div
-                class="module"
-                style={cSettings.itemAlignment === "Left" ? "margin-right: auto;" : "margin-left: auto;"}
-                animate:flip={{ duration: 200 }}
-                transition:fly={{ x: 50, duration: 200 }}
+            class="module"
+            style={cSettings.itemAlignment === "Left"
+                ? "margin-right: auto;"
+                : "margin-left: auto;"}
+            animate:flip={{ duration: 200 }}
+            transition:fly={{ x: 50, duration: 200 }}
         >
-            {$spaceSeperatedNames ? convertToSpacedString(name) : name}
+            {$spaceSeperatedNames
+                ? convertToSpacedString(name)
+                : name}
+
             {#if tag && cSettings.showTags}
                 <span class="tag"> {tag}</span>
             {/if}
@@ -70,14 +111,13 @@
 </div>
 
 <style lang="scss">
-
   .module {
     background-color: var(--arraylist-background-color);
     color: var(--arraylist-text-color);
     font-size: 14px;
-    border-radius: 4px 0 0 4px;
-    padding: 5px 8px;
-    border-left: solid 4px var(--arraylist-border-color);
+    border-radius: 0px 0 0 0px;
+    padding: 1px 2px;
+    border-right: solid 4px var(--arraylist-border-color);
     width: max-content;
     font-weight: 500;
   }

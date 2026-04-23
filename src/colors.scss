@@ -3,7 +3,7 @@
     --surface-color: #000000;
     --text-color: #ffffff;
     --text-dimmed-color: #d3d3d3;
-
+    --array-color: #00BEFF;
     --accent-color: #4677ff;
     --accent-hover-color: color-mix(in srgb, var(--accent-color) 82%, black);
     --accent-subtle-background-color: color-mix(in srgb, var(--accent-color) 12%, transparent);
@@ -172,20 +172,19 @@
     --tabgui-base-color: var(--surface-color);
     --tabgui-text-color: var(--text-color);
     --tabgui-text-dimmed-color: var(--text-dimmed-color);
-    --tabgui-base-36-color: color-mix(in srgb, var(--tabgui-base-color) 36%, transparent);
-    --tabgui-base-50-color: color-mix(in srgb, var(--tabgui-base-color) 50%, transparent);
-    --tabgui-base-68-color: color-mix(in srgb, var(--tabgui-base-color) 68%, transparent);
-    --tabgui-icon-background-color: var(--tabgui-base-68-color);
+    --tabgui-base-36-color: color-mix(in srgb, var(--tabgui-base-color) 30%, transparent);
+    --tabgui-base-50-color: color-mix(in srgb, var(--tabgui-base-color) 30%, transparent);
+    --tabgui-base-68-color: color-mix(in srgb, var(--tabgui-base-color) 30%, transparent);
     --tabgui-category-background-color: var(--tabgui-base-50-color);
-    --tabgui-category-active-background-color: var(--accent-color);
+    --tabgui-category-active-background-color: rgba(0, 190, 255, 0.5);
     --tabgui-module-selected-background-color: var(--tabgui-base-36-color);
     --tabgui-modules-background-color: var(--tabgui-base-50-color);
 
     --arraylist-base-color: var(--surface-color);
-    --arraylist-text-color: var(--text-color);
+    --arraylist-text-color: var(--array-color);
     --arraylist-tag-color: #aaaaaa;
-    --arraylist-background-color: color-mix(in srgb, var(--arraylist-base-color) 68%, transparent);
-    --arraylist-border-color: var(--accent-color);
+    --arraylist-background-color: color-mix(in srgb, var(--arraylist-base-color) 75%, transparent);
+    --arraylist-border-color: var(--array-color);
 
     --targethud-base-color: var(--surface-color);
     --targethud-text-color: var(--text-color);

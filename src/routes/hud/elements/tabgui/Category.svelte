@@ -30,7 +30,7 @@
         color: var(--tabgui-text-color);
         font-size: 14px;
         width: 100%;
-        padding: 7px 12px 7px 12px;
+        padding: 2px 12px 1px 11px;
 
         background: linear-gradient(
             to left,
