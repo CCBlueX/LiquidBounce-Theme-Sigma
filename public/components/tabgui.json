@@ -1,11 +1,11 @@
 {
   "name": "TabGui",
-  "enabled": false,
+  "enabled": true,
   "singleton": true,
   "alignment": {
     "horizontalAlignment": "Left",
-    "horizontalOffset": 15,
+    "horizontalOffset": 0,
     "verticalAlignment": "Top",
-    "verticalOffset": 90
+    "verticalOffset": 0
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "Watermark",
-  "enabled": true,
+  "enabled": false,
   "singleton": true,
   "alignment": {
     "horizontalAlignment": "Left",
