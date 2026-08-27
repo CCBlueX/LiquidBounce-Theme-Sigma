@@ -44,6 +44,13 @@
     outline: none;
 }
 
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
 body {
     font-family: "Inter", sans-serif;
     user-select: none;
