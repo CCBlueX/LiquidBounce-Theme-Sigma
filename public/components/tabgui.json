@@ -1,5 +1,6 @@
 {
   "name": "TabGui",
+  "description": "Provides keyboard navigation for modules.",
   "enabled": true,
   "singleton": true,
   "alignment": {

@@ -1,5 +1,6 @@
 {
   "name": "KeyBinds",
+  "description": "Shows active module key bindings.",
   "enabled": false,
   "singleton": true,
   "alignment": {
