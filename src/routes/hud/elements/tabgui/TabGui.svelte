@@ -135,12 +135,11 @@
 
 
 .title {
-    position: fixed;
-    top: 5px;
-    left: 42px;
-
+    /* laid out in flow above the categories so it follows the component
+       instead of sticking to a viewport offset */
     display: flex;
     align-items: flex-start;
+    align-self: flex-start;
 
     padding: 2px 5px;
     padding-left: 7px;
@@ -174,7 +173,6 @@
 .tabgui {
     display: flex;
     width: fit-content;
-    margin-top: 38px;
 }
 
 .categories {
