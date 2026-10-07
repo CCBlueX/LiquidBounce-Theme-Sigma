@@ -1,6 +1,7 @@
 import {REST_BASE} from "./host";
 import type {
     Account,
+    ModuleCategory,
     Alignment,
     Browser,
     ClientInfo,
@@ -45,6 +46,13 @@ export async function getMetadata(): Promise<Metadata> {
 export async function getModules(): Promise<Module[]> {
     const response = await fetch(`${API_BASE}/client/modules`);
     const data: [Module] = await response.json();
+
+    return data;
+}
+
+export async function getCategories(): Promise<ModuleCategory[]> {
+    const response = await fetch(`${API_BASE}/client/modules/categories`);
+    const data: [ModuleCategory] = await response.json();
 
     return data;
 }
@@ -594,23 +602,23 @@ export async function setProxyFavorite(id: number, favorite: boolean) {
     }
 }
 
-export async function addProxy(host: string, port: number, username: string, password: string, type: string, forwardAuthentication: boolean) {
+export async function addProxy(host: string, port: number, username: string, password: string, type: string, forwardAuthentication: boolean, proxyResourcePacks: boolean, proxyDns: boolean) {
     await fetch(`${API_BASE}/client/proxies/add`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({host, port, username, password, type, forwardAuthentication})
+        body: JSON.stringify({host, port, username, password, type, forwardAuthentication, proxyResourcePacks, proxyDns})
     });
 }
 
-export async function editProxy(id: number, host: string, port: number, username: string, password: string, type: string, forwardAuthentication: boolean) {
+export async function editProxy(id: number, host: string, port: number, username: string, password: string, type: string, forwardAuthentication: boolean, proxyResourcePacks: boolean, proxyDns: boolean) {
     await fetch(`${API_BASE}/client/proxies/edit`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({id, host, port, username, password, type, forwardAuthentication})
+        body: JSON.stringify({id, host, port, username, password, type, forwardAuthentication, proxyResourcePacks, proxyDns})
     })
 }
 
@@ -754,6 +762,12 @@ export async function reconnectToServer() {
 
 export async function toggleBackgroundShaderEnabled() {
     await fetch(`${API_BASE}/client/shader`, {
+        method: "POST",
+    });
+}
+
+export async function toggleBasicMode() {
+    await fetch(`${API_BASE}/client/basic-mode`, {
         method: "POST",
     });
 }
