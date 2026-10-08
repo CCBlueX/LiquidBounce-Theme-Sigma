@@ -6,8 +6,8 @@
   "alignment": {
     "horizontalAlignment": "Right",
     "horizontalOffset": 15,
-    "verticalAlignment": "Bottom",
-    "verticalOffset": 15
+    "verticalAlignment": "CenterTranslated",
+    "verticalOffset": 0
   },
   "tweaks": ["DISABLE_STATUS_EFFECT_OVERLAY"]
 }
