@@ -74,6 +74,10 @@
         window.addEventListener("resize", updatePosition);
         loadSettings();
 
+        // While an ancestor is still transitioning in, the fixed component resolves against that
+        // transformed ancestor and is measured in the wrong place, so measure again once it settled.
+        Promise.allSettled(document.getAnimations().map(animation => animation.finished)).then(updatePosition);
+
         return () => {
             resizeObserver.disconnect();
             window.removeEventListener("resize", updatePosition);
