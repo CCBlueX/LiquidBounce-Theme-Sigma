@@ -56,6 +56,7 @@ jobs:
           git push origin ${{ steps.version_tag.outputs.version }}
       
       - name: Upload to GitHub Release
+        id: release
         uses: softprops/action-gh-release@v1
         with:
           files: ${{ env.ZIP_NAME }}.zip
@@ -64,12 +65,24 @@ jobs:
           name: "Build Release ${{ steps.version_tag.outputs.version }}"
       
       - name: Upload to LiquidBounce Marketplace
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+          VERSION: ${{ steps.version_tag.outputs.version }}
+          SOURCE_RELEASE_URL: ${{ steps.release.outputs.url }}
         run: |
+          set -euo pipefail
+          SOURCE_COMMIT=$(git rev-parse HEAD)
           curl -X POST \
-            "https://api.liquidbounce.net/api/v3/marketplace/${{ env.MARKETPLACE_ITEM_ID }}/revisions" \
-            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
-            -F "file=@${{ env.ZIP_NAME }}.zip" \
-            -F "version=${{ steps.version_tag.outputs.version }}" \
-            -F "changelog=Automated build from commit ${{ github.sha }}" \
-            -F "channel=alpha" \
+            "https://api.liquidbounce.net/api/v3/marketplace/${MARKETPLACE_ITEM_ID}/revisions" \
+            -H "Authorization: Bearer ${API_TOKEN}" \
+            -F "file=@${ZIP_NAME}.zip" \
+            --form-string "version=${VERSION}" \
+            --form-string "changelog=Automated build from commit ${GITHUB_SHA}" \
+            --form-string "channel=alpha" \
+            --form-string "source_repository=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" \
+            --form-string "source_ref=${GITHUB_REF}" \
+            --form-string "source_commit=${SOURCE_COMMIT}" \
+            --form-string "source_release_tag=${VERSION}" \
+            --form-string "source_release_url=${SOURCE_RELEASE_URL}" \
+            --form-string "source_build_url=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --fail-with-body
