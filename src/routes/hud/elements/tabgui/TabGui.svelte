@@ -107,7 +107,7 @@
         {#if renderedModules.length > 0}
             <div
                 class="modules"
-                transition:fly={{ x: -10, duration: 200 }}
+                transition:fly={{ x: -10, duration: 150 }}
                 style="height: {categoriesElement?.offsetHeight}px"
             >
                 {#each renderedModules as { name, enabled }, index}

@@ -103,7 +103,7 @@
                 ? "margin-right: auto;"
                 : "margin-left: auto;"}
             animate:flip={{ duration: 200 }}
-            transition:fly={{ x: 50, duration: 200 }}
+            transition:fly={{ x: 50, duration: 160 }}
         >
             {$spaceSeperatedNames
                 ? convertToSpacedString(name)
